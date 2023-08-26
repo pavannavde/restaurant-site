@@ -1,7 +1,7 @@
 let cards = document.querySelector(".cards");
-function getMenu() {
+ async function getMenu() {
     //  this function fetches the menu items from a JSON source and displays them on the screen.
-    fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
+     await fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
       .then(response => response.json())
       .then(menu => {
         // Display the menu to the user
@@ -26,6 +26,7 @@ function getMenu() {
           div.append(img,div1)
           cards.appendChild(div)
          });
+        
       });
   }
         
@@ -67,7 +68,7 @@ function getMenu() {
   
   async function orderProcess() {
     try {
-        getMenu();
+       await getMenu();
       const order = await takeOrder();
       console.log('Order:', order);
   
@@ -81,7 +82,8 @@ function getMenu() {
         thankyouFnc();
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.log('An error occurred :', error);
+      alert("An error occurred");
     }
   }
   
