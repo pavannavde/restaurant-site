@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded",getMenu());
         console.log(status);
         if(status.order_status)
         {
-          payOrder()
+           return payOrder();
         }
         else{
           throw new error("Problem in making order !");
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded",getMenu());
            
         if(status.paid)
         {
-          thankyouFnc()
+          thankyouFnc();
         }
         else{
           throw new error("Payment failed !")
