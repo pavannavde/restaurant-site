@@ -82,13 +82,18 @@ document.addEventListener("DOMContentLoaded",getMenu());
       .then((menu)=>takeOrder(menu))
       .then((order)=>{
         console.log('Order:', order);
+        alert("order:" ,order);
         return order;
+        
       })
       .then(()=>orderPrep())
       .then((status)=>{
         console.log(status);
         if(status.order_status)
         {
+       
+          alert("order:" ,order);
+
            return payOrder();
         }
         else{
