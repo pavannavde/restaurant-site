@@ -2,7 +2,7 @@ let cards = document.querySelector(".cards");
 document.addEventListener("DOMContentLoaded",getMenu());
   function getMenu() {
     //  this function fetches the menu items from a JSON source and displays them on the screen.
-      fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
+      fetch(`https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json`)
       .then(response => response.json())
       .then(menu => {
         // Display the menu to the user
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded",getMenu());
     
       
       //  await getMenu();
-       fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
+       fetch(`https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json`)
       .then(response=>response.json())
       .then(data=>resolve(data))
       .then((menu)=>takeOrder(menu))
@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded",getMenu());
         console.log('Order:', order);
         return order;
       })
-      .then((order)=>orderPrep(order))
-      .then(status=>{
+      .then(()=>orderPrep())
+      .then((status)=>{
         console.log(status);
         if(status.order_status)
         {
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded",getMenu());
           thankyouFnc();
         }
         else{
-          throw new error("Payment failed !")
+          throw new error("Payment failed !");
 
         } })
       .catch((error)=>{
