@@ -1,7 +1,8 @@
 let cards = document.querySelector(".cards");
- async function getMenu() {
+document.addEventListener("DOMContentLoaded",getMenu());
+  function getMenu() {
     //  this function fetches the menu items from a JSON source and displays them on the screen.
-     await fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
+      fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
       .then(response => response.json())
       .then(menu => {
         // Display the menu to the user
@@ -27,21 +28,24 @@ let cards = document.querySelector(".cards");
           cards.appendChild(div)
          });
         
-      });
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
   }
         
-  function takeOrder() {
+  function takeOrder(food) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const burgers = ['Burger A', 'Burger B', 'Burger C'];
-        const randomBurgers = [];
+        const burgers = food;
+        const randomMenu = [];
   
         for (let i = 0; i < 3; i++) {
           const randomIndex = Math.floor(Math.random() * burgers.length);
-          randomBurgers.push(burgers[randomIndex]);
+          randomMenu.push(burgers[randomIndex]);
         }
   
-        resolve({ burgers: randomBurgers });
+        resolve({ orderitem : randomMenu });
       }, 2500);
     });
   }
@@ -49,7 +53,9 @@ let cards = document.querySelector(".cards");
   function orderPrep() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve({ order_status: true, paid: false });
+        console.log({ order_status: true, paid: false });
+          resolve({ order_status: true, paid: false });
+       
       }, 1500);
     });
   }
@@ -66,25 +72,43 @@ let cards = document.querySelector(".cards");
     alert('Thank you for eating with us today!');
   }
   
-  async function orderProcess() {
-    try {
-       await getMenu();
-      const order = await takeOrder();
-      console.log('Order:', order);
-  
-      const prepStatus = await orderPrep();
-      console.log('Preparation Status:', prepStatus);
-  
-      const paymentStatus = await payOrder();
-      console.log('Payment Status:', paymentStatus);
-  
-      if (paymentStatus.paid) {
-        thankyouFnc();
-      }
-    } catch (error) {
-      console.log('An error occurred :', error);
-      alert("An error occurred");
-    }
+   function orderProcess() {
+    
+      
+      //  await getMenu();
+       fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json")
+      .then(response=>response.json())
+      .then(data=>resolve(data))
+      .then((menu)=>takeOrder(menu))
+      .then((order)=>{
+        console.log('Order:', order);
+        return order;
+      })
+      .then((order)=>orderPrep(order))
+      .then(status=>{
+        console.log(status);
+        if(status.order_status)
+        {
+          payOrder()
+        }
+        else{
+          throw new error("Problem in making order !");
+        }
+
+      })
+      .then((status)=>{
+           
+        if(status.paid)
+        {
+          thankyouFnc()
+        }
+        else{
+          throw new error("Payment failed !")
+
+        } })
+      .catch((error)=>{
+        console.error(error);
+      })
   }
   
   // Call the orderProcess function to initiate the ordering process.
