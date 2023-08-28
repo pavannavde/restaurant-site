@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded",getMenu());
       //  await getMenu();
        fetch(`https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json`)
       .then(response=>response.json())
-      .then(data=>resolve(data))
+      .then((data)=>{resolve(data);})
       .then((menu)=>takeOrder(menu))
       .then((order)=>{
         console.log('Order:', order);
